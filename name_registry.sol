@@ -8,7 +8,7 @@ contract NameResistry{
   struct ContractInfo{
     address owner;
     address contractAddress;
-    bytes32 description;
+    string description;
   }
 
   // contrract name to address
@@ -16,7 +16,7 @@ contract NameResistry{
 
 
   // constractor
-  function NameResistry(){
+  function NameResistry() public{
     numRegistry = 0;
   }
 
@@ -30,24 +30,18 @@ contract NameResistry{
 
   }
 
-  //  to register contracgt address
+  //  to register contract address
   function registerAddress(bytes32 _name, address _contractAddress)public onlyOwner(_name){
 
     contracts[_name].contractAddress = _contractAddress;
   }
 
   // to register contract description
-  function registerDescript(bytes32 _name, bytes32 _description) public onlyOwner(_name){
+  function registerDescript(bytes32 _name, string _description) public onlyOwner(_name){
 
     contracts[_name].description = _description;
   }
 
-
-  // to transfer ownership
-  function transferOwnership(bytes32 _name, address _contractAddressTaker) public onlyOwner(_name){
-
-    contracts[_name].contractAddress = _contractAddressTaker;
-  }
 
   // to call contract owner address by name
   function getOwnerAddress(bytes32 _name) public view returns(address){
@@ -60,8 +54,13 @@ contract NameResistry{
   }
 
   // to call contract description by name
-  function getDescript(bytes32 _name) public view returns(bytes32){
+  function getDescript(bytes32 _name) public view returns(string){
     return contracts[_name].description;
+  }
+
+  // to call the number of register
+  function getNumberRegi() public view returns(uint){
+    return numRegistry;
   }
 
   // to delete contract owner so that same contract name can be available by someone else
@@ -69,6 +68,7 @@ contract NameResistry{
   function deleteContract(bytes32 _name) public onlyOwner(_name){
 
     contracts[_name].owner = 0;
+    numRegistry--;
   }
 
   // modifier only owner in local
