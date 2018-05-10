@@ -77,4 +77,11 @@ contract NameResistry{
     _;
   }
 
+  // transfer contract from owner to someone else
+  function transferOwner(bytes32 _name, address _addr)public onlyOwner(_name){
+    contracts[_name].owner = 0;
+    contracts[_name].owner = _addr;
+  }
+
 }
+
